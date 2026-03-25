@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { LayoutDashboard, CheckCircle, Code2, LogOut, User, Swords, Sun, Moon } from 'lucide-react';
+import { LayoutDashboard, CheckCircle, Code2, LogOut, User, Swords, Sun, Moon, Download, FileText } from 'lucide-react';
 
 import AnalysisForm from '../components/AnalysisForm';
 import RoadmapCard from '../components/RoadmapCard';
 import ProgressTracker from '../components/ProgressTracker';
 import PracticeProblems from '../components/PracticeProblems';
 import MockInterview from '../components/MockInterview';
+import ExportReport from '../components/ExportReport';
+import ResumeBuilder from '../components/ResumeBuilder';
+import NotificationBell from '../components/NotificationBell';
 import Chatbot from '../components/Chatbot';
 
 export default function Dashboard() {
@@ -194,6 +197,36 @@ export default function Dashboard() {
             <Swords size={20} />
             Mock Interview
           </button>
+
+          <button 
+            className={`glass-button ${activeTab === 'export' ? 'active' : ''}`}
+            onClick={() => setActiveTab('export')}
+            style={{ 
+              justifyContent: 'flex-start', 
+              background: activeTab === 'export' ? 'rgba(139, 92, 246, 0.2)' : 'transparent',
+              border: activeTab === 'export' ? '1px solid rgba(139, 92, 246, 0.4)' : '1px solid transparent',
+              color: activeTab === 'export' ? '#d8b4fe' : 'var(--text-secondary)',
+              boxShadow: 'none'
+            }}
+          >
+            <Download size={20} />
+            Export Report
+          </button>
+
+          <button 
+            className={`glass-button ${activeTab === 'resume' ? 'active' : ''}`}
+            onClick={() => setActiveTab('resume')}
+            style={{ 
+              justifyContent: 'flex-start', 
+              background: activeTab === 'resume' ? 'rgba(139, 92, 246, 0.2)' : 'transparent',
+              border: activeTab === 'resume' ? '1px solid rgba(139, 92, 246, 0.4)' : '1px solid transparent',
+              color: activeTab === 'resume' ? '#d8b4fe' : 'var(--text-secondary)',
+              boxShadow: 'none'
+            }}
+          >
+            <FileText size={20} />
+            Resume Builder
+          </button>
         </nav>
 
         <div style={{ marginTop: 'auto', paddingTop: '1.5rem' }}>
@@ -238,6 +271,8 @@ export default function Dashboard() {
           >
             {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
           </button>
+
+          <NotificationBell />
 
           <div style={{ position: 'relative' }}>
             <div 
@@ -354,6 +389,14 @@ export default function Dashboard() {
 
           {activeTab === 'interview' && (
             <MockInterview />
+          )}
+
+          {activeTab === 'export' && (
+            <ExportReport user={user} />
+          )}
+
+          {activeTab === 'resume' && (
+            <ResumeBuilder user={user} />
           )}
 
         </div>
