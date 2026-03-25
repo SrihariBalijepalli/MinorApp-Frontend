@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { LayoutDashboard, CheckCircle, Code2, LogOut, User } from 'lucide-react';
+import { LayoutDashboard, CheckCircle, Code2, LogOut, User, Swords, Sun, Moon } from 'lucide-react';
 
 import AnalysisForm from '../components/AnalysisForm';
 import RoadmapCard from '../components/RoadmapCard';
 import ProgressTracker from '../components/ProgressTracker';
 import PracticeProblems from '../components/PracticeProblems';
+import MockInterview from '../components/MockInterview';
 import Chatbot from '../components/Chatbot';
 
 export default function Dashboard() {
@@ -46,6 +47,14 @@ export default function Dashboard() {
     return localStorage.getItem('activeTab') || 'home';
   });
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  // ─── Theme Toggle ───
+  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark');
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+  const toggleTheme = () => setTheme(theme === 'dark' ? 'light' : 'dark');
 
   useEffect(() => { localStorage.setItem('roadmapData', JSON.stringify(roadmapData)); }, [roadmapData]);
   useEffect(() => { localStorage.setItem('analysisMetrics', JSON.stringify(analysisMetrics)); }, [analysisMetrics]);
@@ -170,6 +179,21 @@ export default function Dashboard() {
             <Code2 size={20} />
             Practice
           </button>
+
+          <button 
+            className={`glass-button ${activeTab === 'interview' ? 'active' : ''}`}
+            onClick={() => setActiveTab('interview')}
+            style={{ 
+              justifyContent: 'flex-start', 
+              background: activeTab === 'interview' ? 'rgba(139, 92, 246, 0.2)' : 'transparent',
+              border: activeTab === 'interview' ? '1px solid rgba(139, 92, 246, 0.4)' : '1px solid transparent',
+              color: activeTab === 'interview' ? '#d8b4fe' : 'var(--text-secondary)',
+              boxShadow: 'none'
+            }}
+          >
+            <Swords size={20} />
+            Mock Interview
+          </button>
         </nav>
 
         <div style={{ marginTop: 'auto', paddingTop: '1.5rem' }}>
@@ -191,9 +215,30 @@ export default function Dashboard() {
             background: 'rgba(15, 23, 42, 0.3)',
             backdropFilter: 'blur(8px)',
             position: 'relative',
-            zIndex: 50
+            zIndex: 50,
+            gap: '0.75rem'
           }}
         >
+          {/* Theme Toggle */}
+          <button
+            onClick={toggleTheme}
+            style={{
+              background: 'rgba(255, 255, 255, 0.05)',
+              border: '1px solid var(--glass-border)',
+              borderRadius: '10px',
+              padding: '0.5rem',
+              cursor: 'pointer',
+              color: 'var(--text-secondary)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              transition: 'all 0.2s'
+            }}
+            title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+          >
+            {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+          </button>
+
           <div style={{ position: 'relative' }}>
             <div 
               style={{ display: 'flex', alignItems: 'center', gap: '1rem', cursor: 'pointer' }}
@@ -305,6 +350,10 @@ export default function Dashboard() {
 
           {activeTab === 'practice' && (
             <PracticeProblems userRole={user?.targetRole || 'General'} />
+          )}
+
+          {activeTab === 'interview' && (
+            <MockInterview />
           )}
 
         </div>

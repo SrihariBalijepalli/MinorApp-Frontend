@@ -1,6 +1,6 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import Editor from '@monaco-editor/react';
-import { ArrowLeft, Play, CheckCircle2, XCircle, Clock, RotateCcw, Copy, ChevronDown } from 'lucide-react';
+import { ArrowLeft, Play, CheckCircle2, XCircle, Clock, RotateCcw, Copy, ChevronDown, Timer, StickyNote } from 'lucide-react';
 import LANGUAGES, { getStarterCode } from '../data/languageTemplates';
 
 export default function CodeEditor({ problem, onBack, onSolved, isSolved }) {
@@ -11,6 +11,22 @@ export default function CodeEditor({ problem, onBack, onSolved, isSolved }) {
   const [activeDescTab, setActiveDescTab] = useState('description');
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
   const editorRef = useRef(null);
+
+  // ─── Code Timer ───
+  const [elapsedSeconds, setElapsedSeconds] = useState(0);
+  const [timerRunning, setTimerRunning] = useState(true);
+  useEffect(() => {
+    if (!timerRunning) return;
+    const interval = setInterval(() => setElapsedSeconds(s => s + 1), 1000);
+    return () => clearInterval(interval);
+  }, [timerRunning]);
+  const formatTime = (s) => `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`;
+
+  // ─── Notes ───
+  const [notes, setNotes] = useState(() => {
+    try { return localStorage.getItem(`notes_${problem.id}`) || ''; } catch { return ''; }
+  });
+  const saveNotes = (val) => { setNotes(val); localStorage.setItem(`notes_${problem.id}`, val); };
 
   const handleEditorMount = (editor) => {
     editorRef.current = editor;
@@ -135,6 +151,19 @@ export default function CodeEditor({ problem, onBack, onSolved, isSolved }) {
               padding: '2px 10px', borderRadius: '12px', fontWeight: 600
             }}>✓ Solved</span>
           )}
+          {/* Timer */}
+          <button
+            onClick={() => setTimerRunning(!timerRunning)}
+            style={{
+              display: 'flex', alignItems: 'center', gap: '0.3rem',
+              background: 'rgba(245, 158, 11, 0.1)', border: '1px solid rgba(245, 158, 11, 0.3)',
+              color: '#fbbf24', padding: '3px 10px', borderRadius: '8px',
+              fontFamily: "'Cascadia Code', monospace", fontSize: '0.8rem', fontWeight: 600,
+              cursor: 'pointer', transition: 'all 0.2s'
+            }}
+          >
+            <Timer size={13} /> {formatTime(elapsedSeconds)}
+          </button>
         </div>
         <div style={{ display: 'flex', gap: '0.5rem' }}>
           <button onClick={resetCode} title="Reset Code" style={{
@@ -184,7 +213,7 @@ export default function CodeEditor({ problem, onBack, onSolved, isSolved }) {
         }}>
           {/* Description Tabs */}
           <div style={{ display: 'flex', borderBottom: '1px solid var(--glass-border)', flexShrink: 0 }}>
-            {['description', 'results'].map(tab => (
+            {['description', 'results', 'notes'].map(tab => (
               <button key={tab} onClick={() => setActiveDescTab(tab)}
                 style={{
                   flex: 1, padding: '0.6rem', border: 'none', cursor: 'pointer',
@@ -196,7 +225,7 @@ export default function CodeEditor({ problem, onBack, onSolved, isSolved }) {
                   transition: 'all 0.2s'
                 }}
               >
-                {tab === 'results' && results ? `Results (${passedCount}/${totalCount})` : tab}
+                {tab === 'results' && results ? `Results (${passedCount}/${totalCount})` : tab === 'notes' ? '📝 Notes' : tab}
               </button>
             ))}
           </div>
@@ -338,6 +367,31 @@ export default function CodeEditor({ problem, onBack, onSolved, isSolved }) {
                     ))}
                   </div>
                 )}
+              </div>
+            )}
+
+            {activeDescTab === 'notes' && (
+              <div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.75rem' }}>
+                  <StickyNote size={16} color="#fbbf24" />
+                  <h4 style={{ margin: 0, color: 'var(--text-primary)', fontSize: '0.95rem' }}>Personal Notes</h4>
+                </div>
+                <textarea
+                  value={notes}
+                  onChange={(e) => saveNotes(e.target.value)}
+                  placeholder="Write your approach, key insights, or things to remember..."
+                  style={{
+                    width: '100%', minHeight: '250px', padding: '1rem',
+                    borderRadius: '8px', border: '1px solid var(--glass-border)',
+                    background: 'rgba(0,0,0,0.2)', color: 'var(--text-primary)',
+                    fontFamily: 'inherit', fontSize: '0.85rem', lineHeight: 1.6,
+                    outline: 'none', resize: 'vertical',
+                    transition: 'border-color 0.2s'
+                  }}
+                  onFocus={(e) => e.target.style.borderColor = 'rgba(139, 92, 246, 0.5)'}
+                  onBlur={(e) => e.target.style.borderColor = 'var(--glass-border)'}
+                />
+                <p style={{ fontSize: '0.7rem', color: 'var(--text-secondary)', marginTop: '0.5rem' }}>Notes are saved automatically to your browser.</p>
               </div>
             )}
           </div>
