@@ -1,157 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { Code2, ChevronRight, Star, Zap, Trophy, Filter } from 'lucide-react';
 import CodeEditor from './CodeEditor';
-
-// ─── Problem Bank: role → difficulty → problems ────────────────
-const PROBLEM_BANK = {
-  // ──────── GENERIC (fallback) ────────
-  _default: {
-    Basic: [
-      {
-        id: 'gen-b1',
-        title: 'Reverse a String',
-        description: 'Write a function `reverseString(s)` that takes a string and returns it reversed.',
-        examples: [
-          { input: '"hello"', output: '"olleh"' },
-          { input: '"world"', output: '"dlrow"' }
-        ],
-        constraints: ['1 ≤ s.length ≤ 10⁵', 'String contains only printable ASCII'],
-        starterCode: 'function reverseString(s) {\n  // your code here\n}',
-        testCases: [
-          { input: 'hello', expected: 'olleh' },
-          { input: 'world', expected: 'dlrow' },
-          { input: 'a', expected: 'a' },
-          { input: '', expected: '' }
-        ]
-      },
-      {
-        id: 'gen-b2',
-        title: 'Find Maximum in Array',
-        description: 'Write a function `findMax(arr)` that returns the largest number in an array of integers.',
-        examples: [
-          { input: '[1, 5, 3, 9, 2]', output: '9' },
-          { input: '[-1, -5, -3]', output: '-1' }
-        ],
-        constraints: ['1 ≤ arr.length ≤ 10⁴', '-10⁶ ≤ arr[i] ≤ 10⁶'],
-        starterCode: 'function findMax(arr) {\n  // your code here\n}',
-        testCases: [
-          { input: [1, 5, 3, 9, 2], expected: 9 },
-          { input: [-1, -5, -3], expected: -1 },
-          { input: [42], expected: 42 },
-          { input: [0, 0, 0], expected: 0 }
-        ]
-      },
-      {
-        id: 'gen-b3',
-        title: 'Count Vowels',
-        description: 'Write a function `countVowels(s)` that returns the number of vowels (a, e, i, o, u) in a string. Case-insensitive.',
-        examples: [
-          { input: '"Hello World"', output: '3' },
-          { input: '"xyz"', output: '0' }
-        ],
-        constraints: ['0 ≤ s.length ≤ 10⁵'],
-        starterCode: 'function countVowels(s) {\n  // your code here\n}',
-        testCases: [
-          { input: 'Hello World', expected: 3 },
-          { input: 'xyz', expected: 0 },
-          { input: 'aeiou', expected: 5 },
-          { input: 'AEIOU', expected: 5 },
-          { input: '', expected: 0 }
-        ]
-      }
-    ],
-    Intermediate: [
-      {
-        id: 'gen-i1',
-        title: 'Two Sum',
-        description: 'Write a function `twoSum(nums, target)` that returns an array of two indices such that the numbers at those indices add up to the target. You may assume each input has exactly one solution.',
-        examples: [
-          { input: '[2, 7, 11, 15], target = 9', output: '[0, 1]' },
-          { input: '[3, 2, 4], target = 6', output: '[1, 2]' }
-        ],
-        constraints: ['2 ≤ nums.length ≤ 10⁴', '-10⁹ ≤ nums[i] ≤ 10⁹', 'Only one valid answer exists'],
-        starterCode: 'function twoSum(nums, target) {\n  // your code here\n}',
-        testCases: [
-          { input: [[2, 7, 11, 15], 9], expected: [0, 1] },
-          { input: [[3, 2, 4], 6], expected: [1, 2] },
-          { input: [[3, 3], 6], expected: [0, 1] }
-        ]
-      },
-      {
-        id: 'gen-i2',
-        title: 'Valid Palindrome',
-        description: 'Write a function `isPalindrome(s)` that returns `true` if the given string is a palindrome considering only alphanumeric characters and ignoring cases, otherwise `false`.',
-        examples: [
-          { input: '"A man, a plan, a canal: Panama"', output: 'true' },
-          { input: '"race a car"', output: 'false' }
-        ],
-        constraints: ['1 ≤ s.length ≤ 2 × 10⁵', 'String consists of printable ASCII'],
-        starterCode: 'function isPalindrome(s) {\n  // your code here\n}',
-        testCases: [
-          { input: 'A man, a plan, a canal: Panama', expected: true },
-          { input: 'race a car', expected: false },
-          { input: ' ', expected: true },
-          { input: 'aa', expected: true }
-        ]
-      },
-      {
-        id: 'gen-i3',
-        title: 'FizzBuzz',
-        description: 'Write a function `fizzBuzz(n)` that returns an array of strings from 1 to n. For multiples of 3 use "Fizz", multiples of 5 use "Buzz", multiples of both use "FizzBuzz", otherwise the number as a string.',
-        examples: [
-          { input: '5', output: '["1","2","Fizz","4","Buzz"]' }
-        ],
-        constraints: ['1 ≤ n ≤ 10⁴'],
-        starterCode: 'function fizzBuzz(n) {\n  // your code here\n}',
-        testCases: [
-          { input: 3, expected: ["1", "2", "Fizz"] },
-          { input: 5, expected: ["1", "2", "Fizz", "4", "Buzz"] },
-          { input: 15, expected: ["1","2","Fizz","4","Buzz","Fizz","7","8","Fizz","Buzz","11","Fizz","13","14","FizzBuzz"] }
-        ]
-      }
-    ],
-    Advanced: [
-      {
-        id: 'gen-a1',
-        title: 'Longest Substring Without Repeating Characters',
-        description: 'Write a function `lengthOfLongestSubstring(s)` that returns the length of the longest substring without repeating characters.',
-        examples: [
-          { input: '"abcabcbb"', output: '3 (substring "abc")' },
-          { input: '"bbbbb"', output: '1' }
-        ],
-        constraints: ['0 ≤ s.length ≤ 5 × 10⁴', 'String consists of English letters, digits, symbols, and spaces'],
-        starterCode: 'function lengthOfLongestSubstring(s) {\n  // your code here\n}',
-        testCases: [
-          { input: 'abcabcbb', expected: 3 },
-          { input: 'bbbbb', expected: 1 },
-          { input: 'pwwkew', expected: 3 },
-          { input: '', expected: 0 },
-          { input: ' ', expected: 1 }
-        ]
-      },
-      {
-        id: 'gen-a2',
-        title: 'Group Anagrams',
-        description: 'Write a function `groupAnagrams(strs)` that groups an array of strings into arrays of anagrams. Return the groups in any order.',
-        examples: [
-          { input: '["eat","tea","tan","ate","nat","bat"]', output: '[["eat","tea","ate"],["tan","nat"],["bat"]]' }
-        ],
-        constraints: ['1 ≤ strs.length ≤ 10⁴', '0 ≤ strs[i].length ≤ 100', 'Lowercase English letters only'],
-        starterCode: 'function groupAnagrams(strs) {\n  // your code here\n}',
-        testCases: [
-          { input: ["eat","tea","tan","ate","nat","bat"], expected: [["eat","tea","ate"],["tan","nat"],["bat"]] },
-          { input: [""], expected: [[""]] },
-          { input: ["a"], expected: [["a"]] }
-        ]
-      }
-    ]
-  }
-};
-
-// Map common role names to _default for now
-const getRoleProblems = (role) => {
-  return PROBLEM_BANK[role] || PROBLEM_BANK._default;
-};
+import PROBLEM_BANK from '../data/problemBank';
 
 const difficultyConfig = {
   Basic: { color: '#10b981', icon: Star, label: 'Easy' },
@@ -169,15 +19,13 @@ export default function PracticeProblems({ userRole }) {
     } catch (e) { return []; }
   });
 
-  const problems = useMemo(() => getRoleProblems(userRole), [userRole]);
-
   const allProblems = useMemo(() => {
     const result = [];
-    for (const [difficulty, list] of Object.entries(problems)) {
+    for (const [difficulty, list] of Object.entries(PROBLEM_BANK)) {
       list.forEach(p => result.push({ ...p, difficulty }));
     }
     return result;
-  }, [problems]);
+  }, []);
 
   const filtered = filter === 'All'
     ? allProblems
@@ -208,7 +56,7 @@ export default function PracticeProblems({ userRole }) {
           Practice Problems
         </h1>
         <p style={{ color: 'var(--text-secondary)', margin: 0 }}>
-          Sharpen your skills with role-specific coding challenges — from basic to advanced.
+          Sharpen your skills with {allProblems.length} coding challenges — from basic to advanced.
         </p>
       </div>
 
@@ -281,7 +129,6 @@ export default function PracticeProblems({ userRole }) {
               onMouseOver={(e) => { e.currentTarget.style.transform = 'translateX(4px)'; e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.4)'; }}
               onMouseOut={(e) => { e.currentTarget.style.transform = 'translateX(0)'; e.currentTarget.style.borderColor = solved ? 'rgba(16, 185, 129, 0.3)' : 'var(--glass-border)'; }}
             >
-              {/* Difficulty Badge */}
               <div style={{
                 width: '36px', height: '36px', borderRadius: '8px',
                 background: `${config.color}22`,
@@ -291,7 +138,6 @@ export default function PracticeProblems({ userRole }) {
                 <Code2 size={18} color={config.color} />
               </div>
 
-              {/* Info */}
               <div style={{ flex: 1 }}>
                 <h4 style={{
                   margin: 0, fontSize: '1rem', color: 'var(--text-primary)',
@@ -310,6 +156,11 @@ export default function PracticeProblems({ userRole }) {
                   }}>
                     {config.label}
                   </span>
+                  {problem.topic && (
+                    <span style={{ fontSize: '0.7rem', color: 'var(--text-secondary)', background: 'rgba(255,255,255,0.05)', padding: '2px 6px', borderRadius: '4px' }}>
+                      {problem.topic}
+                    </span>
+                  )}
                   {solved && (
                     <span style={{ fontSize: '0.75rem', color: 'var(--success)', fontWeight: 500 }}>
                       ✓ Solved
@@ -318,7 +169,6 @@ export default function PracticeProblems({ userRole }) {
                 </div>
               </div>
 
-              {/* Arrow */}
               <ChevronRight size={20} color="var(--text-secondary)" />
             </div>
           );
