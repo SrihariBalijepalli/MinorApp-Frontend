@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { LayoutDashboard, CheckCircle, Settings, LogOut, User } from 'lucide-react';
+import { LayoutDashboard, CheckCircle, Code2, LogOut, User } from 'lucide-react';
 
 import AnalysisForm from '../components/AnalysisForm';
 import RoadmapCard from '../components/RoadmapCard';
 import ProgressTracker from '../components/ProgressTracker';
+import PracticeProblems from '../components/PracticeProblems';
 import Chatbot from '../components/Chatbot';
 
 export default function Dashboard() {
@@ -156,18 +157,18 @@ export default function Dashboard() {
           </button>
 
           <button 
-            className={`glass-button ${activeTab === 'settings' ? 'active' : ''}`}
-            onClick={() => setActiveTab('settings')}
+            className={`glass-button ${activeTab === 'practice' ? 'active' : ''}`}
+            onClick={() => setActiveTab('practice')}
             style={{ 
               justifyContent: 'flex-start', 
-              background: activeTab === 'settings' ? 'rgba(139, 92, 246, 0.2)' : 'transparent',
-              border: activeTab === 'settings' ? '1px solid rgba(139, 92, 246, 0.4)' : '1px solid transparent',
-              color: activeTab === 'settings' ? '#d8b4fe' : 'var(--text-secondary)',
+              background: activeTab === 'practice' ? 'rgba(139, 92, 246, 0.2)' : 'transparent',
+              border: activeTab === 'practice' ? '1px solid rgba(139, 92, 246, 0.4)' : '1px solid transparent',
+              color: activeTab === 'practice' ? '#d8b4fe' : 'var(--text-secondary)',
               boxShadow: 'none'
             }}
           >
-            <Settings size={20} />
-            Settings
+            <Code2 size={20} />
+            Practice
           </button>
         </nav>
 
@@ -302,13 +303,10 @@ export default function Dashboard() {
             />
           )}
 
-          {activeTab === 'settings' && (
-            <div className="animate-fade-in glass-panel" style={{ padding: '2rem', textAlign: 'center', color: 'var(--text-secondary)' }}>
-              <Settings size={48} style={{ opacity: 0.5, marginBottom: '1rem' }} />
-              <h3>Settings</h3>
-              <p>Account preferences and API settings are coming soon.</p>
-            </div>
+          {activeTab === 'practice' && (
+            <PracticeProblems userRole={user?.targetRole || 'General'} />
           )}
+
         </div>
       </main>
 
