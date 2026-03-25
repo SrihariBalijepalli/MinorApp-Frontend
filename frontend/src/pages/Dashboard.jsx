@@ -8,28 +8,43 @@ import ProgressTracker from '../components/ProgressTracker';
 import Chatbot from '../components/Chatbot';
 
 export default function Dashboard() {
+  const navigate = useNavigate();
   const [user, setUser] = useState(() => {
-    const saved = localStorage.getItem('user');
-    return saved ? JSON.parse(saved) : { name: 'Demo User', email: 'admin@example.com' };
+    try {
+      const saved = localStorage.getItem('user');
+      if (!saved || saved === 'undefined' || saved === 'null') return null;
+      return JSON.parse(saved);
+    } catch(e) { return null; }
   });
 
+  useEffect(() => {
+    if (!user) {
+      navigate('/login');
+    }
+  }, [user, navigate]);
+
   const [roadmapData, setRoadmapData] = useState(() => {
-    const saved = localStorage.getItem('roadmapData');
-    return saved ? JSON.parse(saved) : [];
+    try {
+      const saved = localStorage.getItem('roadmapData');
+      return (saved && saved !== 'undefined') ? JSON.parse(saved) : [];
+    } catch(e) { return []; }
   });
   const [analysisMetrics, setAnalysisMetrics] = useState(() => {
-    const saved = localStorage.getItem('analysisMetrics');
-    return saved ? JSON.parse(saved) : null;
+    try {
+      const saved = localStorage.getItem('analysisMetrics');
+      return (saved && saved !== 'undefined') ? JSON.parse(saved) : null;
+    } catch(e) { return null; }
   });
   const [progress, setProgress] = useState(() => {
-    const saved = localStorage.getItem('progress');
-    return saved ? JSON.parse(saved) : {};
+    try {
+      const saved = localStorage.getItem('progress');
+      return (saved && saved !== 'undefined') ? JSON.parse(saved) : {};
+    } catch(e) { return {}; }
   });
   const [activeTab, setActiveTab] = useState(() => {
     return localStorage.getItem('activeTab') || 'home';
   });
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => { localStorage.setItem('roadmapData', JSON.stringify(roadmapData)); }, [roadmapData]);
   useEffect(() => { localStorage.setItem('analysisMetrics', JSON.stringify(analysisMetrics)); }, [analysisMetrics]);
@@ -37,8 +52,11 @@ export default function Dashboard() {
   useEffect(() => { localStorage.setItem('activeTab', activeTab); }, [activeTab]);
 
   const handleLogout = () => {
+    localStorage.clear();
     navigate('/login');
   };
+
+  if (!user) return null;
 
   const handleAnalysisResult = (data) => {
     if (data) {
@@ -170,7 +188,9 @@ export default function Dashboard() {
             justifyContent: 'flex-end',
             padding: '0 2rem',
             background: 'rgba(15, 23, 42, 0.3)',
-            backdropFilter: 'blur(8px)'
+            backdropFilter: 'blur(8px)',
+            position: 'relative',
+            zIndex: 50
           }}
         >
           <div style={{ position: 'relative' }}>
@@ -204,7 +224,7 @@ export default function Dashboard() {
                 }}
               >
                 <button
-                  onClick={() => navigate('/edit-profile')}
+                  onClick={() => { setIsDropdownOpen(false); navigate('/edit-profile'); }}
                   style={{
                     display: 'flex', alignItems: 'center', gap: '0.5rem',
                     background: 'transparent', border: 'none', color: 'var(--text-primary)',
@@ -219,7 +239,7 @@ export default function Dashboard() {
                 </button>
                 <div style={{ height: '1px', background: 'var(--glass-border)', margin: '0.25rem 0' }}></div>
                 <button
-                  onClick={handleLogout}
+                  onClick={() => { setIsDropdownOpen(false); handleLogout(); }}
                   style={{
                     display: 'flex', alignItems: 'center', gap: '0.5rem',
                     background: 'transparent', border: 'none', color: 'var(--danger)',

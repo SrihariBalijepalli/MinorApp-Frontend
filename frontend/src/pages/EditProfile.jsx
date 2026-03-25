@@ -11,13 +11,17 @@ export default function EditProfile() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const savedUser = localStorage.getItem('user');
-    if (savedUser) {
-      const user = JSON.parse(savedUser);
-      setName(user.name || '');
-      setEmail(user.email || '');
-      setTargetRole(user.targetRole || '');
-    } else {
+    try {
+      const savedUser = localStorage.getItem('user');
+      if (savedUser && savedUser !== 'undefined' && savedUser !== 'null') {
+        const user = JSON.parse(savedUser);
+        setName(user.name || '');
+        setEmail(user.email || '');
+        setTargetRole(user.targetRole || '');
+      } else {
+        navigate('/login');
+      }
+    } catch(e) {
       navigate('/login');
     }
   }, [navigate]);
