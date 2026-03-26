@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { Link, useNavigate } from 'react-router-dom';
 import { LogIn, User } from 'lucide-react';
+import FloatingElements from '../components/FloatingElements';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -61,13 +62,14 @@ export default function Login() {
 
   return (
     <div className="auth-container">
+      <FloatingElements />
       <div className="auth-image-side animate-fade-in">
         <img src="/auth-bg.png" alt="Tech AI Background" />
         <div className="auth-image-overlay">
-          <h1 style={{ fontSize: '3.5rem', fontWeight: 800, marginBottom: '1.5rem', textShadow: '0 4px 20px rgba(0,0,0,0.5)', letterSpacing: '-1px' }}>
+          <h1 className="text-shimmer" style={{ fontSize: '3.5rem', fontWeight: 900, marginBottom: '1.5rem', letterSpacing: '-1.5px' }}>
             Master Your Skills
           </h1>
-          <p style={{ fontSize: '1.25rem', opacity: 0.85, maxWidth: '450px', lineHeight: '1.6' }}>
+          <p style={{ fontSize: '1.15rem', opacity: 0.8, maxWidth: '420px', lineHeight: '1.7', color: 'rgba(241,245,249,0.8)' }}>
             Join the ultimate AI-driven roadmap generator to level up your career and track your progress seamlessly.
           </p>
         </div>
@@ -83,18 +85,18 @@ export default function Login() {
             margin: '0 auto',
             position: 'relative',
             zIndex: 1,
-            boxShadow: '0 25px 50px rgba(0,0,0,0.5)'
+            boxShadow: '0 25px 60px rgba(0,0,0,0.5), 0 0 80px rgba(139, 92, 246, 0.05)'
           }}
         >
           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1.5rem' }}>
-        <div style={{ background: 'rgba(139, 92, 246, 0.2)', padding: '16px', borderRadius: '50%' }}>
-          <User size={32} color="var(--primary-color)" />
-        </div>
-      </div>
+            <div className="animate-glow-pulse" style={{ background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(56, 189, 248, 0.1))', padding: '18px', borderRadius: '50%', border: '1px solid rgba(139, 92, 246, 0.15)' }}>
+              <User size={32} color="var(--neon-purple)" />
+            </div>
+          </div>
       
-      <h2 className="text-gradient" style={{ marginBottom: '2rem', textAlign: 'center', fontSize: '2rem' }}>
-        Welcome Back
-      </h2>
+          <h2 className="text-gradient" style={{ marginBottom: '2rem', textAlign: 'center', fontSize: '2rem' }}>
+            Welcome Back
+          </h2>
       
       <form onSubmit={handleLogin}>
         <div style={{ marginBottom: '1.5rem' }}>

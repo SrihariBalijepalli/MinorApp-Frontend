@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserPlus, User } from 'lucide-react';
+import FloatingElements from '../components/FloatingElements';
 
 export default function Register() {
   const [name, setName] = useState('');
@@ -48,13 +49,14 @@ export default function Register() {
 
   return (
     <div className="auth-container">
+      <FloatingElements />
       <div className="auth-image-side animate-fade-in">
         <img src="/auth-bg.png" alt="Tech AI Background" />
         <div className="auth-image-overlay">
-          <h1 style={{ fontSize: '3.5rem', fontWeight: 800, marginBottom: '1.5rem', textShadow: '0 4px 20px rgba(0,0,0,0.5)', letterSpacing: '-1px' }}>
+          <h1 className="text-shimmer" style={{ fontSize: '3.5rem', fontWeight: 900, marginBottom: '1.5rem', letterSpacing: '-1.5px' }}>
             Unlock Your Potential
           </h1>
-          <p style={{ fontSize: '1.25rem', opacity: 0.85, maxWidth: '450px', lineHeight: '1.6' }}>
+          <p style={{ fontSize: '1.15rem', opacity: 0.8, maxWidth: '420px', lineHeight: '1.7', color: 'rgba(241,245,249,0.8)' }}>
             Create an account today to get personalized learning roadmaps based on your target role and current skills.
           </p>
         </div>
@@ -70,18 +72,18 @@ export default function Register() {
             margin: '0 auto',
             position: 'relative',
             zIndex: 1,
-            boxShadow: '0 25px 50px rgba(0,0,0,0.5)'
+            boxShadow: '0 25px 60px rgba(0,0,0,0.5), 0 0 80px rgba(59, 130, 246, 0.05)'
           }}
         >
           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1.5rem' }}>
-        <div style={{ background: 'rgba(59, 130, 246, 0.2)', padding: '16px', borderRadius: '50%' }}>
-          <UserPlus size={32} color="var(--secondary-color)" />
-        </div>
-      </div>
+            <div className="animate-glow-pulse" style={{ background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(56, 189, 248, 0.1))', padding: '18px', borderRadius: '50%', border: '1px solid rgba(59, 130, 246, 0.15)' }}>
+              <UserPlus size={32} color="var(--neon-blue)" />
+            </div>
+          </div>
       
-      <h2 className="text-gradient" style={{ marginBottom: '2rem', textAlign: 'center', fontSize: '2rem' }}>
-        Create Account
-      </h2>
+          <h2 className="text-gradient" style={{ marginBottom: '2rem', textAlign: 'center', fontSize: '2rem' }}>
+            Create Account
+          </h2>
       
       <form onSubmit={handleRegister}>
         <div style={{ marginBottom: '1.25rem' }}>

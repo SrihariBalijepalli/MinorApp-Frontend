@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { LayoutDashboard, CheckCircle, Code2, LogOut, User, Swords, Sun, Moon, Download, FileText } from 'lucide-react';
+import { LayoutDashboard, CheckCircle, Code2, LogOut, User, Swords, Sun, Moon, Download, FileText, BarChart3 } from 'lucide-react';
 
 import AnalysisForm from '../components/AnalysisForm';
 import RoadmapCard from '../components/RoadmapCard';
@@ -10,6 +10,8 @@ import MockInterview from '../components/MockInterview';
 import ExportReport from '../components/ExportReport';
 import ResumeBuilder from '../components/ResumeBuilder';
 import NotificationBell from '../components/NotificationBell';
+import Leaderboard from '../components/Leaderboard';
+import FloatingElements from '../components/FloatingElements';
 import Chatbot from '../components/Chatbot';
 
 export default function Dashboard() {
@@ -120,21 +122,13 @@ export default function Dashboard() {
   };
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', width: '100%', background: 'var(--bg-color)' }}>
+    <div style={{ display: 'flex', minHeight: '100vh', width: '100%', position: 'relative', overflow: 'hidden', background: 'transparent' }}>
+      <FloatingElements />
       {/* Sidebar */}
-      <aside 
-        style={{ 
-          width: '280px', 
-          background: 'var(--glass-bg)', 
-          backdropFilter: 'blur(12px)',
-          borderRight: '1px solid var(--glass-border)',
-          display: 'flex',
-          flexDirection: 'column',
-          padding: '2rem 1.5rem'
-        }}
-      >
-        <div style={{ marginBottom: '3rem', padding: '0 0.5rem' }}>
-          <h2 className="text-gradient" style={{ fontSize: '1.5rem', margin: 0 }}>Skill Analyzer</h2>
+      <aside className="sidebar-container">
+        <div style={{ marginBottom: '2.5rem', padding: '0 0.5rem' }}>
+          <h2 className="text-shimmer" style={{ fontSize: '1.4rem', margin: 0, fontWeight: 800 }}>⚡ Skill Analyzer</h2>
+          <div className="neon-line" style={{ marginTop: '1rem' }}></div>
         </div>
 
         <nav style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', flex: 1 }}>
@@ -227,6 +221,21 @@ export default function Dashboard() {
             <FileText size={20} />
             Resume Builder
           </button>
+
+          <button 
+            className={`glass-button ${activeTab === 'leaderboard' ? 'active' : ''}`}
+            onClick={() => setActiveTab('leaderboard')}
+            style={{ 
+              justifyContent: 'flex-start', 
+              background: activeTab === 'leaderboard' ? 'rgba(139, 92, 246, 0.2)' : 'transparent',
+              border: activeTab === 'leaderboard' ? '1px solid rgba(139, 92, 246, 0.4)' : '1px solid transparent',
+              color: activeTab === 'leaderboard' ? '#d8b4fe' : 'var(--text-secondary)',
+              boxShadow: 'none'
+            }}
+          >
+            <BarChart3 size={20} />
+            Leaderboard
+          </button>
         </nav>
 
         <div style={{ marginTop: 'auto', paddingTop: '1.5rem' }}>
@@ -237,21 +246,7 @@ export default function Dashboard() {
       {/* Main Content */}
       <main style={{ flex: 1, display: 'flex', flexDirection: 'column', overflowY: 'auto' }}>
         {/* Top Header */}
-        <header 
-          style={{ 
-            height: '80px', 
-            borderBottom: '1px solid var(--glass-border)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'flex-end',
-            padding: '0 2rem',
-            background: 'rgba(15, 23, 42, 0.3)',
-            backdropFilter: 'blur(8px)',
-            position: 'relative',
-            zIndex: 50,
-            gap: '0.75rem'
-          }}
-        >
+        <header className="header-bar">
           {/* Theme Toggle */}
           <button
             onClick={toggleTheme}
@@ -397,6 +392,10 @@ export default function Dashboard() {
 
           {activeTab === 'resume' && (
             <ResumeBuilder user={user} />
+          )}
+
+          {activeTab === 'leaderboard' && (
+            <Leaderboard user={user} />
           )}
 
         </div>

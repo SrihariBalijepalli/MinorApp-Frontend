@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate, Link } from 'react-router-dom';
 import { User, Save, ArrowLeft } from 'lucide-react';
+import FloatingElements from '../components/FloatingElements';
 
 export default function EditProfile() {
   const [name, setName] = useState('');
@@ -63,7 +64,8 @@ export default function EditProfile() {
   };
 
   return (
-    <div style={{ width: '100%', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem' }}>
+    <div style={{ width: '100%', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem', position: 'relative', overflow: 'hidden' }}>
+      <FloatingElements />
       <div 
         className="glass-panel animate-fade-in" 
         style={{ 
@@ -71,15 +73,15 @@ export default function EditProfile() {
           maxWidth: '500px', 
           width: '100%', 
           position: 'relative',
-          boxShadow: '0 25px 50px rgba(0,0,0,0.5)'
+          boxShadow: '0 25px 60px rgba(0,0,0,0.5), 0 0 80px rgba(139, 92, 246, 0.05)'
         }}
       >
         <Link to="/analyze" style={{ position: 'absolute', top: '24px', left: '24px', color: 'var(--text-secondary)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '8px', transition: 'color 0.2s' }} onMouseOver={(e) => e.target.style.color = 'white'} onMouseOut={(e) => e.target.style.color = 'var(--text-secondary)'}>
           <ArrowLeft size={16} /> Back
         </Link>
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1.5rem', marginTop: '1rem' }}>
-          <div style={{ background: 'rgba(139, 92, 246, 0.2)', padding: '16px', borderRadius: '50%' }}>
-            <User size={32} color="var(--primary-color)" />
+          <div className="animate-glow-pulse" style={{ background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(56, 189, 248, 0.1))', padding: '18px', borderRadius: '50%', border: '1px solid rgba(139, 92, 246, 0.15)' }}>
+            <User size={32} color="var(--neon-purple)" />
           </div>
         </div>
         
