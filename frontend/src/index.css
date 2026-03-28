@@ -364,78 +364,40 @@ h1, h2, h3 {
   100% { transform: scaleY(1.1) rotate(2deg); opacity: 1; }
 }
 
-/* Rings */
-.main-ring-container {
+/* Code Syntax Symbols */
+.syntax-symbol {
   position: absolute;
-  top: 50%; left: 50%;
-  margin-top: -150px; margin-left: -150px;
-  width: 300px; height: 300px;
-  perspective: 1000px;
+  font-family: 'Fira Code', 'Courier New', monospace;
+  font-weight: 700;
+  color: var(--neon-blue);
+  opacity: 0.15;
+  filter: blur(1px);
+  user-select: none;
+  pointer-events: none;
+  text-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
 }
 
-.ring-3d {
+.code-fragment {
   position: absolute;
-  width: 100%; height: 100%;
-  border-radius: 50%;
-  border: 40px solid rgba(56, 189, 248, 0.8);
-  border-top-color: rgba(139, 92, 246, 0.9);
-  border-left-color: rgba(96, 165, 250, 0.9);
-  box-shadow: 
-    inset 0 0 40px rgba(56, 189, 248, 0.5), 
-    0 0 60px rgba(139, 92, 246, 0.6),
-    0 20px 40px rgba(0,0,0,0.5);
-  transform: rotateX(65deg) rotateZ(45deg);
+  font-family: 'Fira Code', monospace;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  opacity: 0.1;
+  background: rgba(99, 102, 241, 0.05);
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(99, 102, 241, 0.1);
+  white-space: nowrap;
+  user-select: none;
+  pointer-events: none;
 }
 
-.main-ring-shadow {
-  transform: translateY(100px) rotateX(65deg) rotateZ(45deg);
-  border-color: rgba(56, 189, 248, 0.1);
-  filter: blur(20px);
-  box-shadow: none;
-}
-
-/* 3D Coins */
-.coin-3d {
-  position: absolute;
-  width: 180px; height: 180px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, rgba(147, 197, 253, 0.9), rgba(30, 58, 138, 0.9) 70%);
-  border: 4px solid rgba(191, 219, 254, 0.8);
-  box-shadow: 
-    -1px 2px 0 #1e3a8a, -2px 4px 0 #1e3a8a, -3px 6px 0 #2563eb,
-    -4px 8px 0 #3b82f6, -5px 10px 0 #2563eb, -6px 12px 0 #1d4ed8,
-    -7px 14px 0 #1e40af, -8px 16px 0 #1e3a8a, -9px 18px 0 #1e3a8a,
-    -20px 40px 50px rgba(59, 130, 246, 0.6),
-    inset -10px -10px 30px rgba(0,0,0,0.5);
-}
-
-/* 3D Cylinders */
-.cylinder-3d {
-  position: absolute;
-  width: var(--w); height: var(--h);
-  background: linear-gradient(90deg, #0f172a 0%, #1e3a8a 20%, #60a5fa 50%, #93c5fd 80%, #1e3a8a 100%);
-  border-bottom-left-radius: calc(var(--w) / 2);
-  border-bottom-right-radius: calc(var(--w) / 2);
-  box-shadow: -10px 20px 40px rgba(59, 130, 246, 0.5);
-}
-
-.cylinder-3d::before {
-  content: '';
-  position: absolute;
-  top: calc(var(--w) / -4); left: 0;
-  width: 100%; height: calc(var(--w) / 2);
-  border-radius: 50%;
-  background: linear-gradient(135deg, #bfdbfe, #3b82f6);
-  border: 1px solid #bfdbfe;
-  box-shadow: inset 0 0 10px rgba(255,255,255,0.8), 0 0 20px rgba(147, 197, 253, 0.6);
-}
-
-.animate-float-slow { animation: float 6s ease-in-out infinite alternate; }
-.float-1 { animation: float 5s ease-in-out infinite alternate-reverse; }
-.float-2 { animation: float 7s ease-in-out infinite alternate; }
-.float-3 { animation: float 4s ease-in-out infinite alternate-reverse; }
-.float-4 { animation: float 5.5s ease-in-out infinite alternate; }
-.float-5 { animation: float 6.5s ease-in-out infinite alternate-reverse; }
+.animate-float-slow { animation: float 10s ease-in-out infinite alternate; }
+.float-1 { animation: float 8s ease-in-out infinite alternate-reverse; }
+.float-2 { animation: float 12s ease-in-out infinite alternate; }
+.float-3 { animation: float 7s ease-in-out infinite alternate-reverse; }
+.float-4 { animation: float 9s ease-in-out infinite alternate; }
+.float-5 { animation: float 11s ease-in-out infinite alternate-reverse; }
 
 /* ═══ Scrollbar ═══ */
 ::-webkit-scrollbar {
