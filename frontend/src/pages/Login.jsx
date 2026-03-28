@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { Link, useNavigate } from 'react-router-dom';
-import { LogIn, User } from 'lucide-react';
+import { LogIn, User, Mail, Lock } from 'lucide-react';
 import FloatingElements from '../components/FloatingElements';
 
 export default function Login() {
@@ -61,83 +61,85 @@ export default function Login() {
   };
 
   return (
-    <div className="auth-container">
+    <div className="auth-fullscreen-wrapper">
       <FloatingElements />
-      <div className="auth-image-side animate-fade-in">
-        <img src="/auth-bg.png" alt="Tech AI Background" />
-        <div className="auth-image-overlay">
-          <h1 className="text-shimmer" style={{ fontSize: '3.5rem', fontWeight: 900, marginBottom: '1.5rem', letterSpacing: '-1.5px' }}>
-            Master Your Skills
-          </h1>
-          <p style={{ fontSize: '1.15rem', opacity: 0.8, maxWidth: '420px', lineHeight: '1.7', color: 'rgba(241,245,249,0.8)' }}>
-            Join the ultimate AI-driven roadmap generator to level up your career and track your progress seamlessly.
-          </p>
-        </div>
-      </div>
       
-      <div className="auth-form-side">
-        <div 
-          className="glass-panel animate-fade-in" 
-          style={{ 
-            padding: '2.5rem', 
-            maxWidth: '420px', 
-            width: '90%', 
-            margin: '0 auto',
-            position: 'relative',
-            zIndex: 1,
-            boxShadow: '0 25px 60px rgba(0,0,0,0.5), 0 0 80px rgba(139, 92, 246, 0.05)'
-          }}
-        >
-          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1.5rem' }}>
-            <div className="animate-glow-pulse" style={{ background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(56, 189, 248, 0.1))', padding: '18px', borderRadius: '50%', border: '1px solid rgba(139, 92, 246, 0.15)' }}>
-              <User size={32} color="var(--neon-purple)" />
+      <div 
+        className="premium-glass-card animate-fade-in-scale" 
+        style={{ 
+          padding: '3rem', 
+          width: '100%',
+          maxWidth: '440px',
+          zIndex: 10,
+          margin: '0 20px'
+        }}
+      >
+        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '2rem' }}>
+          <div className="animate-glow-pulse" style={{ background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.25), rgba(56, 189, 248, 0.15))', padding: '20px', borderRadius: '50%', border: '1px solid rgba(139, 92, 246, 0.3)' }}>
+            <User size={36} color="var(--neon-blue)" style={{ filter: 'drop-shadow(0 0 8px rgba(56,189,248,0.8))' }} />
+          </div>
+        </div>
+    
+        <h2 className="text-shimmer" style={{ marginBottom: '0.5rem', textAlign: 'center', fontSize: '2.4rem', fontWeight: 800, letterSpacing: '-1px' }}>
+          Welcome Back
+        </h2>
+        <p style={{ textAlign: 'center', color: 'var(--text-secondary)', marginBottom: '2.5rem', fontSize: '1.05rem' }}>
+          Sign in to continue your journey
+        </p>
+    
+        <form onSubmit={handleLogin}>
+          <div style={{ marginBottom: '1.8rem' }}>
+            <label style={{ display: 'block', marginBottom: '0.6rem', fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.9rem', letterSpacing: '0.5px' }}>
+              EMAIL ADDRESS
+            </label>
+            <div className="input-group-premium">
+              <input
+                type="email"
+                className="glass-input"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
+                required
+              />
+              <Mail className="input-icon" size={20} />
             </div>
           </div>
-      
-          <h2 className="text-gradient" style={{ marginBottom: '2rem', textAlign: 'center', fontSize: '2rem' }}>
-            Welcome Back
-          </h2>
-      
-      <form onSubmit={handleLogin}>
-        <div style={{ marginBottom: '1.5rem' }}>
-          <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 500, color: 'var(--text-secondary)' }}>
-            Email
-          </label>
-          <input
-            type="email"
-            className="glass-input"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Enter your email"
-          />
+
+          <div style={{ marginBottom: '2.5rem' }}>
+            <label style={{ display: 'block', marginBottom: '0.6rem', fontWeight: 600, color: 'var(--text-primary)', fontSize: '0.9rem', letterSpacing: '0.5px' }}>
+              PASSWORD
+            </label>
+            <div className="input-group-premium">
+              <input
+                type="password"
+                className="glass-input"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter your password"
+                required
+              />
+              <Lock className="input-icon" size={20} />
+            </div>
+          </div>
+
+          <button type="submit" className="glass-button" style={{ padding: '16px', fontSize: '1.1rem', letterSpacing: '1px' }}>
+            <LogIn size={22} />
+            ACCESS CONSOLE
+          </button>
+        </form>
+
+        <div style={{ marginTop: '2rem', textAlign: 'center', position: 'relative' }}>
+          <div style={{ position: 'absolute', top: '50%', left: 0, right: 0, height: '1px', background: 'rgba(255,255,255,0.1)', zIndex: 1 }}></div>
+          <span style={{ position: 'relative', background: 'rgba(10, 15, 36, 1)', padding: '0 12px', color: 'var(--text-secondary)', fontSize: '0.85rem', zIndex: 2, borderRadius: '8px' }}>
+            New to the platform?
+          </span>
         </div>
 
-        <div style={{ marginBottom: '2rem' }}>
-          <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 500, color: 'var(--text-secondary)' }}>
-            Password
-          </label>
-          <input
-            type="password"
-            className="glass-input"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Enter your password"
-          />
-        </div>
-
-        <button type="submit" className="glass-button">
-          <LogIn size={20} />
-          Sign In
-        </button>
-      </form>
-
-      <p style={{ marginTop: '1.5rem', textAlign: 'center', color: 'var(--text-secondary)', fontSize: '0.875rem' }}>
-        Don't have an account?{' '}
-        <Link to="/register" style={{ color: 'var(--primary-color)', textDecoration: 'none', fontWeight: 600 }}>
-          Create one
-        </Link>
-      </p>
-        </div>
+        <p style={{ marginTop: '1.5rem', textAlign: 'center', fontSize: '0.95rem' }}>
+          <Link to="/register" style={{ color: 'var(--neon-blue)', textDecoration: 'none', fontWeight: 700, letterSpacing: '0.5px', transition: 'text-shadow 0.3s', display: 'inline-block' }} onMouseOver={e => e.target.style.textShadow = '0 0 10px rgba(56,189,248,0.5)'} onMouseOut={e => e.target.style.textShadow = 'none'}>
+            CREATE AN ACCOUNT
+          </Link>
+        </p>
       </div>
     </div>
   );
