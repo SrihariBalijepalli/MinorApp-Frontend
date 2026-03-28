@@ -127,7 +127,7 @@ export default function Dashboard() {
       {/* Sidebar */}
       <aside className="sidebar-container">
         <div style={{ marginBottom: '2.5rem', padding: '0 0.5rem' }}>
-          <h2 className="text-shimmer" style={{ fontSize: '1.4rem', margin: 0, fontWeight: 800 }}>⚡ Skill Analyzer</h2>
+          <h2 className="text-shimmer" style={{ fontSize: '1.4rem', margin: 0, fontWeight: 800 }}>⚡ Skillio</h2>
           <div className="neon-line" style={{ marginTop: '1rem' }}></div>
         </div>
 

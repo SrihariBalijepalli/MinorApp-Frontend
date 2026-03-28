@@ -118,7 +118,7 @@ export default function ResumeBuilder({ user }) {
     <div class="section-title">Coding Achievements</div>
     <div class="content">
 • Solved ${solved.length} algorithmic coding challenges across ${topSkills.length} topics
-• Achieved ${accuracy}% overall accuracy on the Skill Analyzer platform
+• Achieved ${accuracy}% overall accuracy on the Skillio platform
 • Proficient in topics: ${topSkills.slice(0, 6).join(', ')}
     </div>
   </div>
@@ -225,7 +225,7 @@ export default function ResumeBuilder({ user }) {
         </div>
         <div>
           <label style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', display: 'block', marginBottom: '0.25rem' }}>Projects</label>
-          <textarea style={textareaStyle} placeholder="Skill Analyzer Platform&#10;- Built a full-stack career development platform..." value={resumeData.projects}
+          <textarea style={textareaStyle} placeholder="Skillio Platform&#10;- Built a full-stack career development platform..." value={resumeData.projects}
             onChange={(e) => handleChange('projects', e.target.value)}
             onFocus={(e) => e.target.style.borderColor = 'rgba(139, 92, 246, 0.5)'}
             onBlur={(e) => e.target.style.borderColor = 'var(--glass-border)'} />

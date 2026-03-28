@@ -53,7 +53,7 @@ export default function AnalysisForm({ onResult }) {
   return (
     <div className="glass-panel" style={{ padding: '2rem', maxWidth: '600px', width: '100%', margin: '0 auto' }}>
       <h2 className="text-gradient" style={{ marginBottom: '2rem', textAlign: 'center', fontSize: '2rem' }}>
-        Skill Analyzer API
+        Skillio API
       </h2>
       
       <form onSubmit={handleSubmit}>

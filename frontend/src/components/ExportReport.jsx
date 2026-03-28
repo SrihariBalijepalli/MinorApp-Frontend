@@ -75,7 +75,7 @@ export default function ExportReport({ user }) {
 </head>
 <body>
   <div class="header">
-    <h1>📊 Skill Analyzer Progress Report</h1>
+    <h1>📊 Skillio Progress Report</h1>
     <p>${user?.fullName || 'User'} • ${user?.email || ''} • Generated on ${date}</p>
   </div>
 
@@ -126,7 +126,7 @@ export default function ExportReport({ user }) {
   </div>` : ''}
 
   <div class="footer">
-    Skill Analyzer Platform • ${date} • This report was auto-generated based on your practice activity.
+    Skillio Platform • ${date} • This report was auto-generated based on your practice activity.
   </div>
 </body>
 </html>`;
